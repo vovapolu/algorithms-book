@@ -1,8 +1,4 @@
 Алгоритмы: От простого к сложному
 =======
 
-This file file serves as your book's preface, a great place to describe your book's content and ideas.
-
-When $$a \ne 0$$, there are two solutions to $$(ax^2 + bx + c = 0)$$ and they are
-$$x = {-b \pm \sqrt{b^2-4ac} \over 2a}.$$
-
+В этой книге я освещаю самые популярные алгоритмы и идеи, связанные с ними. Я намерено не хочу соперничать с учебниками и большими справочниками, наоборот - я постарался сделать описание интересны, не затянутым и приближенным к практике. 
