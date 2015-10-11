@@ -2,6 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import os.path
 import collections
+import math
 
 class PlotFunction:
 	def __init__(self, func, description):
@@ -21,7 +22,25 @@ def linear(factor, var = 'x'):
 	return PlotFunction(lambda x: factor * x, "${}{}$".format(factor, var)) 
 
 def power(pow, var = 'x'):
-	return PlotFunction(lambda x: x ** pow, "${}^{{{}}}$".format(var, pow))
+	return PlotFunction(lambda x: x ** pow, "${{{}}}^{{{}}}$".format(var, pow))
+
+def log(base = math.e, var = 'x'):
+	if base == math.e:
+		description = "$\log({})$".format(var)
+	else:
+		description = "$\log_{{{}}}({})$".format(base, var)
+	return PlotFunction(lambda x: math.log(x, base) if x > 0 else 0, description)
+
+def logpow(pow, var = 'x'):
+	return PlotFunction(lambda x: math.log(x) ** pow if x > 0 else 0, "$\log^{{{}}}({})$".format(pow, var))
+
+def exp(base=math.e, var = 'x'):
+	if base == math.e:
+		description = "$e^{{{}}}$".format(var)
+	else:
+		description = "${}^{{{}}}$".format(base, var)
+	return PlotFunction(lambda x: base**x, description)
+
 
 def set_up_plot(xlimit = None, ylimit = None):
 	def wrap(f):
@@ -68,10 +87,13 @@ plots = {
 	"2-plot-2.svg": plot_funcs(identity(var='n'), linear(2, var='n'), power(2, var='n'), xlimit=30, ylimit=20),
 	"2-plot-3.svg": plot_funcs(identity(var='n'), linear(2, var='n'), power(2, var='n'), xlimit=300, ylimit=200),
 	"2-plot-4.svg": plot_funcs(identity(var='n'), linear(2, var='n'), power(2, var='n'), linear(5, var='n'), linear(10, var='n'), 
-							   xlimit=1000, ylimit=666)
+							   xlimit=1000, ylimit=666),
+	"2-plot-5.svg": plot_funcs(power(2, var='n'), power(3, var='n'), power(4, var='n'), power(10, var='n'), xlimit=15, ylimit=10),
+	"2-plot-6.svg": plot_funcs(log(var='n'), logpow(2, var='n'), logpow(3, var='n'), logpow(5, var='n'), xlimit=30, ylimit=20),
+	"2-plot-7.svg": plot_funcs(exp(2, var='n'), exp(var='n'), exp(3, var='n'), exp(10, var='n'), xlimit=15, ylimit=10)
 }
 
-to_update = "all"
+to_update = ["2-plot-7.svg"]
 
 if __name__ == '__main__':
 	if to_update == "all":
