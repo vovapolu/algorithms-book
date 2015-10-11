@@ -3,6 +3,26 @@ import matplotlib.pyplot as plt
 import os.path
 import collections
 
+class PlotFunction:
+	def __init__(self, func, description):
+		self._func = func
+		self._description = description
+
+	def description(self):
+		return self._description
+
+	def __call__(self, val):
+		return self._func(val)
+
+def identity(var = 'x'):
+	return PlotFunction(lambda x: x, "${}$".format(var))
+
+def linear(factor, var = 'x'):
+	return PlotFunction(lambda x: factor * x, "${}{}$".format(factor, var)) 
+
+def power(pow, var = 'x'):
+	return PlotFunction(lambda x: x ** pow, "${}^{{{}}}$".format(var, pow))
+
 def set_up_plot(xlimit = None, ylimit = None):
 	def wrap(f):
 		def inner(*args, **kwargs):
@@ -40,13 +60,13 @@ def plot_funcs(*funcs, **kwargs):
 		for func in funcs:
 			filtered_points = filter(lambda (x, y): y > 0 and y < ylimit, 
 									 map(lambda x: (x, func(x)), points))
-			plt.plot(*zip(*filtered_points))
+			plt.plot(*zip(*filtered_points), label=func.description())
 	return inner
 
 plots = {
-	"2-plot-1.svg": plot_funcs(lambda x: x, lambda x: 2*x, lambda x: x**2, xlimit=4.5, ylimit=3),
-	"2-plot-2.svg": plot_funcs(lambda x: x, lambda x: 2*x, lambda x: x**2, xlimit=30, ylimit=20),
-	"2-plot-3.svg": plot_funcs(lambda x: x, lambda x: 2*x, lambda x: x**2, xlimit=300, ylimit=200)
+	"2-plot-1.svg": plot_funcs(identity(var='n'), linear(2, var='n'), power(2, var='n'), xlimit=4.5, ylimit=3),
+	"2-plot-2.svg": plot_funcs(identity(var='n'), linear(2, var='n'), power(2, var='n'), xlimit=30, ylimit=20),
+	"2-plot-3.svg": plot_funcs(identity(var='n'), linear(2, var='n'), power(2, var='n'), xlimit=300, ylimit=200)
 }
 
 to_update = "all"
@@ -61,4 +81,5 @@ if __name__ == '__main__':
 
 	for plot in plots_to_update:
 		plot[1]()
+		plt.legend();
 		plt.savefig(plot[0])
