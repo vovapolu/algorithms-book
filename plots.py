@@ -48,7 +48,7 @@ def set_up_plot(xlimit = None, ylimit = None):
 def plot_funcs(*funcs, **kwargs):
 	xlimit = kwargs.pop('xlimit', None)
 	ylimit = kwargs.pop('ylimit', None)
-	npoints = kwargs.pop('npoints', 1000)
+	npoints = kwargs.pop('npoints', 100)
 
 	@set_up_plot(xlimit, ylimit)
 	def inner():
@@ -58,7 +58,7 @@ def plot_funcs(*funcs, **kwargs):
 			points = np.linspace(0, xlimit, npoints)
 		
 		for func in funcs:
-			filtered_points = filter(lambda (x, y): y > 0 and y < ylimit, 
+			filtered_points = filter(lambda (x, y): True, 
 									 map(lambda x: (x, func(x)), points))
 			plt.plot(*zip(*filtered_points), label=func.description())
 	return inner
@@ -66,7 +66,9 @@ def plot_funcs(*funcs, **kwargs):
 plots = {
 	"2-plot-1.svg": plot_funcs(identity(var='n'), linear(2, var='n'), power(2, var='n'), xlimit=4.5, ylimit=3),
 	"2-plot-2.svg": plot_funcs(identity(var='n'), linear(2, var='n'), power(2, var='n'), xlimit=30, ylimit=20),
-	"2-plot-3.svg": plot_funcs(identity(var='n'), linear(2, var='n'), power(2, var='n'), xlimit=300, ylimit=200)
+	"2-plot-3.svg": plot_funcs(identity(var='n'), linear(2, var='n'), power(2, var='n'), xlimit=300, ylimit=200),
+	"2-plot-4.svg": plot_funcs(identity(var='n'), linear(2, var='n'), power(2, var='n'), linear(5, var='n'), linear(10, var='n'), 
+							   xlimit=1000, ylimit=666)
 }
 
 to_update = "all"
@@ -75,11 +77,11 @@ if __name__ == '__main__':
 	if to_update == "all":
 		plots_to_update = plots.items()
 	elif isinstance(to_update, collections.Iterable):
-		plots_to_update = [plots[i] for i in to_update]
+		plots_to_update = [(i, plots[i]) for i in to_update]
 	else:
-		plots_to_update = [plot for plot in plots if not os.path.exists(plot[0])]
+		plots_to_update = [plot for plot in plots.items() if not os.path.exists(plot[0])]
 
 	for plot in plots_to_update:
 		plot[1]()
 		plt.legend();
-		plt.savefig(plot[0])
+		plt.savefig(plot[0], bbox_inches='tight', pad_inches=0)
