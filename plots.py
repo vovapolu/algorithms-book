@@ -48,7 +48,7 @@ def set_up_plot(xlimit = None, ylimit = None):
 def plot_funcs(*funcs, **kwargs):
 	xlimit = kwargs.pop('xlimit', None)
 	ylimit = kwargs.pop('ylimit', None)
-	npoints = kwargs.pop('npoints', 100)
+	npoints = kwargs.pop('npoints', 10000)
 
 	@set_up_plot(xlimit, ylimit)
 	def inner():
@@ -58,7 +58,7 @@ def plot_funcs(*funcs, **kwargs):
 			points = np.linspace(0, xlimit, npoints)
 		
 		for func in funcs:
-			filtered_points = filter(lambda (x, y): True, 
+			filtered_points = filter(lambda (x, y): y > 0 and y <= ylimit, 
 									 map(lambda x: (x, func(x)), points))
 			plt.plot(*zip(*filtered_points), label=func.description())
 	return inner
@@ -84,4 +84,4 @@ if __name__ == '__main__':
 	for plot in plots_to_update:
 		plot[1]()
 		plt.legend();
-		plt.savefig(plot[0], bbox_inches='tight', pad_inches=0)
+		plt.savefig(plot[0])
