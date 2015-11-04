@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 import os.path
 import collections
 import math
+import networkx as nx
 
 class PlotFunction:
     def __init__(self, func, description):
@@ -82,18 +83,23 @@ def plot_funcs(*funcs, **kwargs):
             plt.plot(*zip(*filtered_points), label=func.description())
     return inner
 
+def plot_random_graph(n, p):
+    def inner():
+        G = nx.fast_gnp_random_graph(n, p)
+        nx.draw(G)
+
 plots = {
-    "2-plot-1.svg": plot_funcs(identity(var='n'), linear(2, var='n'), power(2, var='n'), xlimit=4.5, ylimit=3),
-    "2-plot-2.svg": plot_funcs(identity(var='n'), linear(2, var='n'), power(2, var='n'), xlimit=30, ylimit=20),
-    "2-plot-3.svg": plot_funcs(identity(var='n'), linear(2, var='n'), power(2, var='n'), xlimit=300, ylimit=200),
-    "2-plot-4.svg": plot_funcs(identity(var='n'), linear(2, var='n'), power(2, var='n'), linear(5, var='n'), linear(10, var='n'), 
+    "o-notation-1.svg": plot_funcs(identity(var='n'), linear(2, var='n'), power(2, var='n'), xlimit=4.5, ylimit=3),
+    "o-notation-2.svg": plot_funcs(identity(var='n'), linear(2, var='n'), power(2, var='n'), xlimit=30, ylimit=20),
+    "o-notation-3.svg": plot_funcs(identity(var='n'), linear(2, var='n'), power(2, var='n'), xlimit=300, ylimit=200),
+    "o-notation-4.svg": plot_funcs(identity(var='n'), linear(2, var='n'), power(2, var='n'), linear(5, var='n'), linear(10, var='n'),
                                xlimit=1000, ylimit=666),
-    "2-plot-5.svg": plot_funcs(power(2, var='n'), power(3, var='n'), power(4, var='n'), power(10, var='n'), xlimit=15, ylimit=10),
-    "2-plot-6.svg": plot_funcs(log(var='n'), logpow(2, var='n'), logpow(3, var='n'), logpow(5, var='n'), xlimit=30, ylimit=20),
-    "2-plot-7.svg": plot_funcs(exp(2, var='n'), exp(var='n'), exp(3, var='n'), exp(10, var='n'), xlimit=15, ylimit=10)
+    "o-notation-5.svg": plot_funcs(power(2, var='n'), power(3, var='n'), power(4, var='n'), power(10, var='n'), xlimit=15, ylimit=10),
+    "o-notation-6.svg": plot_funcs(log(var='n'), logpow(2, var='n'), logpow(3, var='n'), logpow(5, var='n'), xlimit=30, ylimit=20),
+    "o-notation-7.svg": plot_funcs(exp(2, var='n'), exp(var='n'), exp(3, var='n'), exp(10, var='n'), xlimit=15, ylimit=10)
 }
 
-to_update = ["2-plot-7.svg"]
+to_update = []
 
 if __name__ == '__main__':
     if to_update == "all":
@@ -105,5 +111,5 @@ if __name__ == '__main__':
 
     for plot in plots_to_update:
         plot[1]()
-        plt.legend();
+        plt.legend()
         plt.savefig(plot[0])
