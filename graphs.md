@@ -33,7 +33,10 @@ def find_neighbours(matrix, N, v):
 # строим списки связности по множеству ребер
 # edges - это пары вершины, между которыми есть ребро
 def build_connectivity_lists(edges, N): 
-    lists = [[] for i in xrange(N)]
-    for 
+    ligsts = [[] for i in xrange(N)] # создаем N пустых списков
+    for u, v in edges:
+        # добавляем в список вершины u смежную с ней v
+        lists[u].append(v) 
+    return lists
 
 ```
