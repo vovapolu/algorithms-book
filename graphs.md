@@ -19,8 +19,8 @@ def build_matrix(edges, N): # edges - это пары вершины, между
 ```
 ```python
 # поиск всех соседей данной вершины
-def find_neighbours(matrix, N, v): 
-    return [u for u in range(N) if matrix[v][u] == 1] 
+def find_neighbours(matrix, v): 
+    return [u for u in xrange(len(matrix[v])) if matrix[v][u] == 1] 
     # все вершины, у которых стоит единичка, 
     # обозначающая ребро между ней и v
 ```    
@@ -38,5 +38,11 @@ def build_connectivity_lists(edges, N):
         # добавляем в список вершины u смежную с ней v
         lists[u].append(v) 
     return lists
+```
+
+```python
+# поиск всех соседей данной вершины
+# в этом 
+def find_neighbours(lists, v): 
 
 ```
