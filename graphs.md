@@ -13,8 +13,8 @@
 # строим матрицу по множеству ребер
 def build_matrix(edges, N): # edges - это пары вершины, между которыми есть ребро
     matrix = [[0] * N for i in xrange(N)] # матрица из нулей размером N x N
-    for edge in edges:      # обходим все ребра и помечаем нужные ячейки в матрице
-        matrix[edge[0]][edge[1]] = 1
+    for u, v in edges:      # обходим все ребра и помечаем нужные ячейки в матрице
+        matrix[u][v] = 1
     return matrix
 ```
 ```python
@@ -33,6 +33,7 @@ def find_neighbours(matrix, N, v):
 # строим списки связности по множеству ребер
 # edges - это пары вершины, между которыми есть ребро
 def build_connectivity_lists(edges, N): 
-    lists = [
+    lists = [[] for i in xrange(N)]
+    for 
 
 ```
