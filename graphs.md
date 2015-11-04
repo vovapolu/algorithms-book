@@ -43,5 +43,6 @@ def build_connectivity_lists(edges, N):
 ```python
 # поиск всех соседей данной вершины
 def find_neighbours(lists, v): 
+     # сама струтура уже хранит соседей вершины
     return lists[v]
 ```
