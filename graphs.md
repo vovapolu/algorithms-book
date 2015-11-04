@@ -12,7 +12,7 @@
 ```python
 # строим матрицу по множеству ребер
 def build_matrix(edges, N): # edges - это пары вершины, между которыми есть ребро
-    matrix = [[0] * N] * N  # матрица из нулей размером N x N
+    matrix = [[0] * N for i in xrange(N)] # матрица из нулей размером N x N
     for edge in edges:      # обходим все ребра и помечаем нужные ячейки в матрице
         matrix[edge[0]][edge[1]] = 1
     return matrix
