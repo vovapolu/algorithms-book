@@ -46,3 +46,4 @@ def find_neighbours(lists, v):
      # сама струтура уже хранит соседей вершины
     return lists[v]
 ```
+
