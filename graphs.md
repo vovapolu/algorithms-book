@@ -42,7 +42,6 @@ def build_connectivity_lists(edges, N):
 
 ```python
 # поиск всех соседей данной вершины
-# в этом 
 def find_neighbours(lists, v): 
-
+    return lists[v]
 ```
