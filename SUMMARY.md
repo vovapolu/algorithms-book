@@ -6,5 +6,4 @@
 * [Графы](graphs.md)
 * [Базовая Математика](basic_math/basic_math.md)
    * [О-нотация](o-notation.md)
-   * asdf
 
